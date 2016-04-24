@@ -48,14 +48,14 @@
         </thead>
         <tbody>
         {% for item in sts_list %}
-        <tr>
+        <tr data-md5="{{ item['md5'] }}" data-username="{{ item['name'] }}">
             <th scope="row">1</th>
             <td>{{ item['name'] }}</td>
             <td>{{ item['chat'] }}</td>
             <td>{{ item['login'] }}</td>
             <td>
                 <!-- Secondary, outline button -->
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target=".config-logout-modal">
+                <button type="button" class="btn btn-secondary logoutBtn" data-toggle="modal" data-target=".config-logout-modal">
                     Logout
                 </button>
             </td>
@@ -65,7 +65,7 @@
     </table>
 </div>
 <!-- login modal -->
-<div class="modal fade login-modal">
+<div class="modal fade login-modal" id="loginModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -85,19 +85,17 @@
                     </div>
                     <div class="col-md-2"></div>
                 </form>
-                <div class="row" style="margin-top: 10px">
+                <div class="row" style="margin-top: 10px;">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200"
-                             src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzIwMHgyMDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNTQyZjExODc1YiB0ZXh0IHsgZmlsbDpyZ2JhKDI1NSwyNTUsMjU1LC43NSk7Zm9udC13ZWlnaHQ6bm9ybWFsO2ZvbnQtZmFtaWx5OkhlbHZldGljYSwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNTQyZjExODc1YiI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiM3NzciLz48Zz48dGV4dCB4PSI3NC40Mjk2ODc1IiB5PSIxMDQuNjUiPjIwMHgyMDA8L3RleHQ+PC9nPjwvZz48L3N2Zz4="
-                             data-holder-rendered="true" style="width: 100%; height: 100%;">
+                        <img id="loading-img" class="img-thumbnail" src="../static/loading.gif" width="100%" style="display: none;">
                     </div>
                     <div class="col-md-2"></div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">确认</button>
+                <button type="button" class="btn btn-primary" id="yesLogin">确认</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -106,7 +104,7 @@
 </div>
 <!-- /.modal -->
 <!-- logout modal -->
-<div class="modal fade config-logout-modal">
+<div class="modal fade config-logout-modal" id="logoutModal">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -117,11 +115,11 @@
                 <h4 class="modal-title">确认</h4>
             </div>
             <div class="modal-body">
-                <p>确认登出<span class="modal-username">xxx</span>用户微信吗？</p>
+                <p>确认登出<span id="modalUsername">xxx</span>用户微信吗？</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
+                <button type="button" class="btn btn-primary" id="yesLogout">Yes</button>
             </div>
         </div>
         <!-- /.modal-content -->
